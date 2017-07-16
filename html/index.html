@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="../css/bootstrap.css"> -->
+    <link rel="stylesheet" href="../css/style.css">
+
+
+
+
+</head>
+<body>
+
+<div class="flex-container">
+    <div id="map"></div>
+    <div id="filter-list">
+        <select data-bind="options: myLocations,
+                           optionsText: 'name',
+                           value: selectedLocation,
+                           event: {change: filterSelect}">
+
+        </select>
+        <ul data-bind="foreach: myLocations">
+            <li data-bind="text: name"></li>
+        </ul>
+    </div>
+</div>
+
+
+
+</body>
+   <script rel="script" src="../script/makemap.js"></script>
+   <script rel="script" src="../script/lib/knockout-3.2.0.js"></script>
+   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBikUdzi_9X4v4YZWUEg6aEFCVdE5hTydo&v=3&callback=initMap"></script>
+   <script rel="script" src="../script/script.js"></script>
+</html>
