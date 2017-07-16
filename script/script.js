@@ -36,22 +36,36 @@ function MapsViewModel() {
         self.myLocations.push(new Location(location));
     });
 
-    // function to toggle bounce animation for selected marker
+    // function to toggle bounce animation for selected marker and filter
     this.toggleBounce = function (filter) {
         ko.utils.arrayForEach(self.myLocations(), function (location) {
             if(location.name() === filter){
                 location.marker.setAnimation(google.maps.Animation.BOUNCE);
+                location.marker.setVisible(true);
             }
             else {
                 location.marker.setAnimation(null);
+                location.marker.setVisible(false);
             }
         })
     };
+
+    this.clearFilters = function(){
+        ko.utils.arrayForEach(self.myLocations(), function (location) {
+            location.marker.setAnimation(null);
+            location.marker.setVisible(true);
+        })
+
+    }
 
     // function is called on change of select filter box
     this.filterSelect = function () {
         self.toggleBounce(self.selectedLocation().name());
 
+    }
+
+    this.clickSelect = function (location) {
+        self.toggleBounce(location.name())
     }
 
 

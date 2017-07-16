@@ -19,11 +19,13 @@
         <select data-bind="options: myLocations,
                            optionsText: 'name',
                            value: selectedLocation,
-                           event: {change: filterSelect}">
+                           event: {change: filterSelect}"
+                           id="filter-select">
 
         </select>
+        <button data-bind="click: clearFilters">Clear All Filters</button>
         <ul data-bind="foreach: myLocations">
-            <li data-bind="text: name"></li>
+            <li class="filter-item" data-bind="text: name, click: $parent.clickSelect"></li>
         </ul>
     </div>
 </div>

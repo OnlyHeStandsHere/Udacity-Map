@@ -10,14 +10,19 @@ html, body {
     margin: 0;
     padding: 0;
     font-family: Roboto, sans-serif;
-  }
+}
+
+ul, li{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
 
 
 .flex-container{
     display: flex;
-
     flex-wrap: wrap;
-
     height: 100%;
 }
 
@@ -31,7 +36,30 @@ html, body {
 #filter-list{
     height: 100%;
     min-width: 25%;
+    background-color: #333333;
+    color: white;
+    text-align: center;
 }
+
+#filter-select{
+    margin-bottom: 30px;
+    height: 45px;
+    width: 100%;
+    font-size: 25px;
+}
+
+.filter-item{
+    font-size: 25px;
+    padding:10px;
+    font-weight: 300;
+}
+
+.filter-item:hover{
+    background-color: #2e6da4;
+    color: black;
+}
+
+
 
 @media screen and (max-width: 960px){
     #filter-list{
