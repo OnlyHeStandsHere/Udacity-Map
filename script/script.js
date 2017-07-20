@@ -119,6 +119,7 @@ function Location(data){
         map: map,
         title: data.name
     });
+    self.infoWindow = new google.maps.InfoWindow();
 }
 
 
@@ -148,24 +149,20 @@ function MapsViewModel() {
         })
     };
 
-    this.clearFilters = function(){
-        ko.utils.arrayForEach(self.myLocations(), function (location) {
-            location.marker.setAnimation(null);
-            location.marker.setVisible(true);
-        })
-    };
 
-    // function is called on change of select filter box
-    this.filterSelect = function () {
-        self.toggleBounce(self.selectedLocation().name());
-    };
+
+
 
     // function is called on click of list filter
     // here we'll make an AJAX call to wikipedia if we don't have any
     // info for our location.
+    this.myInfo = new google.maps.InfoWindow();
+
     this.clickSelect = function (location) {
         self.toggleBounce(location.name());
-        $.ajax({
+
+        if (!location.info()){
+         $.ajax({
             url: getBaseWikiUrl() + formatPageName(location.name()),
             dataType: 'jsonp',
             success: function(data) {
@@ -174,14 +171,45 @@ function MapsViewModel() {
                     pageKey = item;
                 });
                 location.info(JSON.stringify(data.query.pages[pageKey].extract));
-                console.log(location.info())
+                self.myInfo.setContent(location.info());
+                self.myInfo.open(map, location.marker);
             },
             error: function () {
-                alert("ajax error");
+                alert("There was an error retrieving information for " + location.name() + "Please refresh page and try again.");
             }
-
         })
-    }
+        }
+        else{
+            self.myInfo.setContent(location.info());
+            self.myInfo.open(map, location.marker);
+        }
+
+    };
+
+    // now set up the click event listners on the map markers
+    // these click listeners will reference the same click event
+    // as the list items
+    ko.utils.arrayForEach(self.myLocations(), function (location) {
+        location.marker.addListener('click', function () {
+            self.clickSelect(location);
+        })
+    });
+
+    // create the ability to clear all applied filters
+    // animations and info windows.
+    this.clearFilters = function(){
+        ko.utils.arrayForEach(self.myLocations(), function (location) {
+            location.marker.setAnimation(null);
+            location.marker.setVisible(true);
+        });
+        self.myInfo.close();
+    };
+
+    // function is called on change of select filter box
+    this.filterSelect = function (location) {
+        self.clickSelect(self.selectedLocation())
+    };
+
 }
 
 // apply ko bindings

@@ -23,7 +23,7 @@
                            id="filter-select">
 
         </select>
-        <button data-bind="click: clearFilters">Clear All Filters</button>
+        <button class="filter-button" data-bind="click: clearFilters">View All Locations</button>
         <ul data-bind="foreach: myLocations">
             <li class="filter-item" data-bind="text: name, click: $parent.clickSelect"></li>
         </ul>
