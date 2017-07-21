@@ -12,7 +12,7 @@ var vancouver = {lat: 49.311927, lng: -123.082117};
     map = new google.maps.Map(document.getElementById('map'), {
       center: vancouver,
       zoom: 12
-    })
+    });
   }
 
 

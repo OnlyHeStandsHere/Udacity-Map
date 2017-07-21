@@ -13,12 +13,12 @@ var locations = [
 
 // returns a wikipedia base url for ajax calls
 var getBaseWikiUrl = function () {
-    return "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&titles="
+    return "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&titles=";
 };
 
 // replaces spaces with %20 to format as query parameter
 var formatPageName = function (name) {
-    return name.replace(' ', '%20')
+    return name.replace(' ', '%20');
 };
 
 
@@ -119,7 +119,7 @@ function MapsViewModel() {
 
     // function is called on change of select filter box
     this.filterSelect = function (location) {
-        self.clickSelect(self.selectedLocation())
+        self.clickSelect(self.selectedLocation());
     };
 
 }
