@@ -4,34 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
-    <!-- <link rel="stylesheet" href="../css/bootstrap.css"> -->
     <link rel="stylesheet" href="../css/style.css">
-<script src="http://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-
-
-
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 </head>
 <body>
-
+    <header class="heading">
+        Local Mountains of Vancouver British Columbia
+    </header>
 <div class="flex-container">
     <div id="map"></div>
     <div id="filter-list">
         <select data-bind="options: myLocations,
                            optionsText: 'name',
                            value: selectedLocation,
+                           optionsCaption: 'Select a location...',
                            event: {change: filterSelect}"
                            id="filter-select">
-
         </select>
-        <button class="filter-button" data-bind="click: clearFilters">View All Locations</button>
         <ul data-bind="foreach: myLocations">
             <li class="filter-item" data-bind="text: name, click: $parent.clickSelect"></li>
         </ul>
+    <button class="button" data-bind="click: clearFilters">View All Locations</button>
     </div>
 </div>
-
-
-
 </body>
    <script rel="script" src="../script/makemap.js"></script>
    <script rel="script" src="../script/lib/knockout-3.2.0.js"></script>
