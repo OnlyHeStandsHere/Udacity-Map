@@ -1,7 +1,7 @@
 # Udacity FSND Neighbourhood Map
 
 ### This map provides information about the local north shore mountains in Vancouver BC.
-### All locatoin information provided by Wikipedia
+### All location information provided by Wikipedia
 
 
 #### To Run This Project
