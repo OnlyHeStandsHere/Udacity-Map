@@ -134,15 +134,24 @@ function MapsViewModel() {
     // will filter both map markers and list items
     this.filterSelect = function () {
         console.log(self.selectedFilter());
+        self.myInfo.close();
         ko.utils.arrayForEach(self.myLocations(), function (location) {
-            if($.inArray(self.selectedFilter(), location.categories) === -1){
-                location.filterVisible(false);
-                location.marker.setVisible(false);
-            }
-            else{
+            location.marker.setAnimation(null);
+            if(!self.selectedFilter()){
                 location.filterVisible(true);
                 location.marker.setVisible(true);
             }
+            else{
+                if($.inArray(self.selectedFilter(), location.categories) === -1){
+                location.filterVisible(false);
+                location.marker.setVisible(false);
+                }
+                else{
+                    location.filterVisible(true);
+                    location.marker.setVisible(true);
+                }
+            }
+
           });
     };
 }
