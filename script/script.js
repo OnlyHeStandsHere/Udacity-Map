@@ -61,10 +61,7 @@ function MapsViewModel() {
             }
         })
     });
-
-    console.log(this.filterCategories);
-
-
+    
     // function to toggle bounce animation for selected marker and filter
     this.toggleBounce = function (filter) {
         ko.utils.arrayForEach(self.myLocations(), function (location) {
