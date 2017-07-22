@@ -18,6 +18,6 @@ var vancouver = {lat: 49.311927, lng: -123.082117};
   // if we didn't get a response from google, we'll just have to alert the usert
   function mapError() {
       alert("There was a problem loading google maps." +
-           "Check your internet connection and firewall settings.")
+           "Check your internet connection and firewall settings.");
   }
 

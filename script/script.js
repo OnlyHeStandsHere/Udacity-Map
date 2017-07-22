@@ -59,9 +59,9 @@ function MapsViewModel() {
             if($.inArray(cat, self.filterCategories) === -1){
                 self.filterCategories.push(cat);
             }
-        })
+        });
     });
-    
+
     // function to toggle bounce animation for selected marker and filter
     this.toggleBounce = function (filter) {
         ko.utils.arrayForEach(self.myLocations(), function (location) {
@@ -73,7 +73,7 @@ function MapsViewModel() {
                 location.marker.setAnimation(null);
                 location.marker.setVisible(false);
             }
-        })
+        });
     };
 
     // function is called on click of list filter
@@ -101,7 +101,7 @@ function MapsViewModel() {
             error: function () {
                 alert("There was an error retrieving information for " + location.name() + " Please check your internet connection, firewall settings and refresh page and try again.");
             }
-        })
+        });
         }
         else{
             self.myInfo.setContent(location.info());
@@ -116,7 +116,7 @@ function MapsViewModel() {
     ko.utils.arrayForEach(self.myLocations(), function (location) {
         location.marker.addListener('click', function () {
             self.clickSelect(location);
-        })
+        });
     });
 
     // create the ability to clear all applied filters
