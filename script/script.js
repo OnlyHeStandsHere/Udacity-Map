@@ -82,13 +82,16 @@ function MapsViewModel() {
     // function is called on click of list filter
     // here we'll make an AJAX call to wikipedia if we don't have any
     // info for our location.
+    // only make the ajax call to wikipedia if we don't already have the info in the location object
+    // this way we will only make calls to wiki if the user actually clicks on a link
     this.clickSelect = function (location) {
         self.toggleBounce(location.name());
 
-        if (!location.info()){      // only make the ajax call to wikipedia if we don't already have the info
+        if (!location.info()){
          $.ajax({
             url: getBaseWikiUrl() + formatPageName(location.name()),
             dataType: 'jsonp',
+            timeout: 4000,
             success: function(data) {
                 var pageKey = '';
                 $.each(data.query.pages, function (item) {
@@ -99,7 +102,7 @@ function MapsViewModel() {
                 self.myInfo.open(map, location.marker);
             },
             error: function () {
-                alert("There was an error retrieving information for " + location.name() + "Please refresh page and try again.");
+                alert("There was an error retrieving information for " + location.name() + " Please check your internet connection, firewall settings and refresh page and try again.");
             }
         })
         }
