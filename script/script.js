@@ -4,11 +4,11 @@
 
 // the locations we will place on the map
 var locations = [
-    {lat: 49.372485, lng: -123.099508, name: "Grouse Mountain"},
-    {lat: 49.396207, lng: -123.204513, name: "Cypress Mountain Ski Area"},
-    {lat: 49.365928, lng: -122.948324, name: "Mount Seymour"},
-    {lat: 49.383529, lng: -123.056634, name: "Mount Fromme"},
-    {lat: 49.311927, lng: -123.082117, name: "Lonsdale Quay"}
+    {lat: 49.372485, lng: -123.099508, name: "Grouse Mountain", cat: ['Outdoor', 'Alpine Skiing', 'Hiking', 'Grizzly Bears!']},
+    {lat: 49.396207, lng: -123.204513, name: "Cypress Mountain Ski Area", cat: ['Outdoor', 'Alpine Skiing', 'Nordic Skiing', 'Lakes/Swimming', 'Hiking']},
+    {lat: 49.365928, lng: -122.948324, name: "Mount Seymour", cat: ['Outdoor', 'Alpine Skiing','Lakes/Swimming', 'Hiking']},
+    {lat: 49.383529, lng: -123.056634, name: "Mount Fromme", cat: ['Outdoor', 'Hiking', 'Mountain Biking']},
+    {lat: 49.311927, lng: -123.082117, name: "Lonsdale Quay", cat: ['Food', 'Transit']}
 ];
 
 // returns a wikipedia base url for ajax calls
@@ -28,6 +28,8 @@ function Location(data){
     self.location = {lat: data.lat, lng: data.lng};
     self.name = ko.observable(data.name);
     self.info = ko.observable();
+    self.categories = data.cat;
+    self.filterVisible = ko.observable(true);
     self.marker = new google.maps.Marker({
         position: self.location,
         map: map,
@@ -41,17 +43,27 @@ function MapsViewModel() {
     var self = this;
 
     this.myLocations = ko.observableArray([]);
-    this.selectedLocation = ko.observable();
+    this.selectedFilter = ko.observable();
+    this.filterCategories = [];
 
     // info window is shared by all markers
     // makes sure only one info window is open at a time on the map
     this.myInfo = new google.maps.InfoWindow();
 
 
-    // make an observable array of locations
+    // make an observable array of locations and
+    // build up a list of filter values from what exists in our model
     locations.forEach(function (location){
         self.myLocations.push(new Location(location));
+        location.cat.forEach(function (cat) {
+            if($.inArray(cat, self.filterCategories) === -1){
+                self.filterCategories.push(cat);
+            }
+        })
     });
+
+    console.log(this.filterCategories);
+
 
     // function to toggle bounce animation for selected marker and filter
     this.toggleBounce = function (filter) {
@@ -113,15 +125,26 @@ function MapsViewModel() {
         ko.utils.arrayForEach(self.myLocations(), function (location) {
             location.marker.setAnimation(null);
             location.marker.setVisible(true);
+            location.filterVisible(true);
         });
         self.myInfo.close();
     };
 
     // function is called on change of select filter box
-    this.filterSelect = function (location) {
-        self.clickSelect(self.selectedLocation());
+    // will filter both map markers and list items
+    this.filterSelect = function () {
+        console.log(self.selectedFilter());
+        ko.utils.arrayForEach(self.myLocations(), function (location) {
+            if($.inArray(self.selectedFilter(), location.categories) === -1){
+                location.filterVisible(false);
+                location.marker.setVisible(false);
+            }
+            else{
+                location.filterVisible(true);
+                location.marker.setVisible(true);
+            }
+          });
     };
-
 }
 
 // apply ko bindings
